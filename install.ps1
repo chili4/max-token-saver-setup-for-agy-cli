@@ -16,22 +16,41 @@ Write-Host "`n=========================================="
 Write-Host " Fase 1: Instalación de Herramientas de Contexto"
 Write-Host "=========================================="
 
-Write-Host "Instalando RTK (Rust Token Killer) como interceptor de stdout..."
-# Simulación de instalación (ej. cargo install rtk-cli)
-Start-Sleep -Seconds 1
-Write-Host "[OK] RTK instalado y configurado en el perfil de terminal." -ForegroundColor Green
+Write-Host "Instalando RTK (Rust Token Killer) desde repositorio oficial..."
+if (-Not (Test-Path "rtk")) {
+    git clone https://github.com/rtk-ai/rtk.git rtk
+}
+# Intentando compilación si es Rust
+if (Test-Path "rtk\Cargo.toml") {
+    Write-Host "Compilando paquete de Rust..."
+    Set-Location rtk
+    cargo install --path .
+    Set-Location ..
+}
 
-Write-Host "Inicializando Hippo Memory localmente..."
-# Simulación de inicialización
-Start-Sleep -Seconds 1
-Write-Host "[OK] Hippo Memory inicializado con --budget 1500." -ForegroundColor Green
+Write-Host "Instalando Hippo Memory..."
+if (-Not (Test-Path "hippo-memory")) {
+    git clone https://github.com/kitfunso/hippo-memory.git hippo-memory
+}
+# Intentando compilación si es Node
+if (Test-Path "hippo-memory\package.json") {
+    Write-Host "Instalando dependencias de Node..."
+    Set-Location hippo-memory
+    npm install
+    npm link
+    Set-Location ..
+}
 
-Write-Host "Configurando code-scale-mcp & context7-slim..."
-# Simulación de configuración de servidores MCP
-Start-Sleep -Seconds 1
-Write-Host "[OK] code-scale-mcp y context7-slim listos para navegación RAG." -ForegroundColor Green
+Write-Host "Instalando code-scale-mcp..."
+# Las utilidades MCP suelen publicarse en NPM
+Write-Host "Intentando instalar @syphon1c/code-scale-mcp via npm..."
+npm install -g @syphon1c/code-scale-mcp --silence
 
-Write-Host "Configurando Bifrost/OneTool Gateway..."
+Write-Host "Aviso de Instalación Manual: context7-slim y Bifrost"
+Write-Host "1. context7-slim: Requiere configuración de cuenta o descarga desde https://context7.com/" -ForegroundColor Yellow
+Write-Host "2. Bifrost: Herramienta de ecosistema getmaxim.ai. Sigue los pasos de configuración de API en https://www.getmaxim.ai/bifrost" -ForegroundColor Yellow
+
+Write-Host "Configurando mcp-config.json Gateway..."
 $mcpConfig = @{
     mcpServers = @{
         bifrost = @{
@@ -54,7 +73,7 @@ $mcpConfig = @{
     }
 }
 $mcpConfig | ConvertTo-Json -Depth 5 | Out-File -FilePath "mcp-config.json" -Encoding UTF8
-Write-Host "[OK] Gateway Bifrost/OneTool configurado en mcp-config.json." -ForegroundColor Green
+Write-Host "[OK] Gateway configurado en mcp-config.json." -ForegroundColor Green
 
 Write-Host "`n=========================================="
 Write-Host " Instalación completada con éxito."
