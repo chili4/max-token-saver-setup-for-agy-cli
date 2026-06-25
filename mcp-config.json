@@ -1,0 +1,28 @@
+﻿{
+    "mcpServers":  {
+                       "code_scale":  {
+                                          "args":  [
+                                                       "--mode",
+                                                       "repository"
+                                                   ],
+                                          "command":  "code-scale-mcp"
+                                      },
+                       "bifrost":  {
+                                       "args":  [
+                                                    "bifrost-gateway.js"
+                                                ],
+                                       "env":  {
+                                                   "GATEWAY_MODE":  "OneTool",
+                                                   "ALLOWED_META_TOOLS":  "code_read,code_write,code_execute,code_rag",
+                                                   "DYNAMIC_ACCESS":  "true"
+                                               },
+                                       "command":  "node"
+                                   },
+                       "context7":  {
+                                        "args":  [
+                                                     "--rag-only"
+                                                 ],
+                                        "command":  "context7-slim"
+                                    }
+                   }
+}
