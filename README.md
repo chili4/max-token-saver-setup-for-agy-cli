@@ -9,7 +9,6 @@ Tras ejecutar el script `install.ps1`, tu entorno tiene el siguiente estado:
 **Instalado y Clonado Automáticamente:**
 * **RTK (Rust Token Killer)**: Clonado en la carpeta `/rtk`. Requiere compilación local con `cargo`.
 * **Hippo Memory**: Clonado en la carpeta `/hippo-memory`. Las dependencias de Node.js se han instalado.
-* **code-scale-mcp**: Se ha intentado instalar globalmente vía NPM (`npm install -g @syphon1c/code-scale-mcp`).
 * **Gateway mcp-config**: Se ha creado el archivo `mcp-config.json` en la raíz del proyecto para enrutar las peticiones.
 * **Directivas de Agente**: El archivo `.agents/AGENTS.md` está activo para forzar a Antigravity a usar el "Protocolo de Quiebre".
 
@@ -28,6 +27,55 @@ Para que este stack funcione correctamente, asegúrate de tener:
 4. **Claves de API** para Context7 y Maxim AI (Bifrost).
 
 ---
+
+ ### Paso 1: Instalar los Motores Base (Node.js y Rust)
+
+  Como vimos, el script necesita poder compilar código de Node y de Rust.
+
+  1. Node.js: Si aún no lo tienes, descárgalo e instálalo desde nodejs.org https://nodejs.org/. (Puedes dejar todas
+  las opciones por defecto en el instalador).
+  2. Rust (Cargo): Descarga el instalador oficial de Rust para Windows desde rustup.rs https://rustup.rs/. Descarga
+  rustup-init.exe  y ejecútalo. Cuando se abra la ventana negra (terminal), presiona  1  y luego  Enter  para la
+  instalación estándar.
+
+  (Nota: Una vez que termines de instalar ambos, es fundamental que cierres tu terminal actual y la vuelvas a abrir
+  para que reconozca los nuevos comandos  npm  y  cargo ).
+
+  ### Paso 2: Ejecutar nuestro Script de Instalación
+
+  Con Node y Rust instalados, abre una nueva terminal (PowerShell) como Administrador, navega a la carpeta de este
+  proyecto ( C:\Users\One2025\Desktop\tokensave antrigravity cli ) y ejecuta el script:
+
+    .\install.ps1
+
+  Este proceso tardará unos minutos, ya que ahora sí descargará el código de RTK y Hippo Memory, y los compilará
+  usando  cargo  y  npm .
+
+  ### Paso 3: Obtener tus Accesos SaaS (Context7 y Bifrost)
+
+  Mientras se compila lo del Paso 2, puedes ir gestionando tus credenciales de las herramientas en la nube:
+
+  1. Ve a https://context7.com/ y regístrate para obtener tu API Key.
+  2. Ve a https://www.getmaxim.ai/bifrost para obtener la API Key del ecosistema Maxim.
+
+  ### Paso 4: Cargar tus credenciales en el entorno
+
+  Una vez que tengas tus dos contraseñas (API Keys), pégalas en tu terminal de PowerShell ejecutando estos comandos
+  (reemplazando lo que está entre comillas con tus contraseñas reales):
+
+    $env:BIFROST_API_KEY="pega_aqui_tu_clave_de_maxim"
+    $env:CONTEXT7_API_KEY="pega_aqui_tu_clave_de_context7"
+
+  ### Paso 5: ¡Inicializar!
+
+  Con todo compilado y tus claves cargadas:
+
+  1. Entra a la nueva carpeta  hippo-memory  y arráncalo (probablemente con  npm start  o el comando que indique su
+  documentación).
+  2. En la terminal de la raíz de nuestro proyecto, simplemente escribe  agy  y presiona Enter.
+
+  ¡Y eso es todo! Al hacer esto último, Antigravity detectará nuestras reglas de  .agents/AGENTS.md  y nuestro puente
+  mcp-config.json .
 
 ## 🚀 Cómo Activarlo y Usarlo en Antigravity CLI (`agy`)
 
@@ -53,7 +101,7 @@ agy
 
 **¿Qué sucederá automáticamente?**
 1. **Detección de Reglas:** `agy` detectará inmediatamente el archivo `.agents/AGENTS.md`. Verás que el agente se comporta diferente: no generará código hasta que no cree un plan estructurado en `docs/plans/current_task.md`.
-2. **Detección MCP:** `agy` leerá `mcp-config.json` y se conectará automáticamente a Bifrost (que a su vez enruta a `code-scale-mcp` y `context7`).
+2. **Detección MCP:** `agy` leerá `mcp-config.json` y se conectará automáticamente a Bifrost (que a su vez enruta a `context7`).
 3. **El Protocolo de Quiebre:** Cuando pidas una tarea compleja, el agente escribirá el plan y **se detendrá**. Te pedirá que ejecutes `/clear`. Al hacerlo, limpiarás el historial largo de tokens, le pegarás el prompt de reinicio que te dio, y el agente continuará su trabajo consumiendo una fracción del costo habitual.
 
 ---

@@ -18,10 +18,6 @@ if (Test-Path "hippo-memory") {
     Write-Host "[OK] Carpeta hippo-memory eliminada." -ForegroundColor Green
 }
 
-Write-Host "Desinstalando code-scale-mcp de npm..."
-npm uninstall -g @syphon1c/code-scale-mcp --silence
-Write-Host "[OK] code-scale-mcp desinstalado si estaba presente." -ForegroundColor Green
-
 Write-Host "Para context7-slim y Bifrost, revoca el acceso desde sus respectivos portales web." -ForegroundColor Yellow
 
 if (Test-Path "mcp-config.json") {

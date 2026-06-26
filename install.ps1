@@ -49,14 +49,6 @@ if (Test-Path "hippo-memory\package.json") {
     }
 }
 
-Write-Host "Instalando code-scale-mcp..."
-if (Get-Command "npm" -ErrorAction SilentlyContinue) {
-    Write-Host "Intentando instalar @syphon1c/code-scale-mcp via npm..."
-    npm install -g @syphon1c/code-scale-mcp --silence
-} else {
-    Write-Host "[WARN] 'npm' no está instalado. Omita la instalación de code-scale-mcp." -ForegroundColor Yellow
-}
-
 Write-Host "Aviso de Instalación Manual: context7-slim y Bifrost"
 Write-Host "1. context7-slim: Requiere configuración de cuenta o descarga desde https://context7.com/" -ForegroundColor Yellow
 Write-Host "2. Bifrost: Herramienta de ecosistema getmaxim.ai. Sigue los pasos de configuración de API en https://www.getmaxim.ai/bifrost" -ForegroundColor Yellow
@@ -72,10 +64,6 @@ $mcpConfig = @{
                 ALLOWED_META_TOOLS = "code_read,code_write,code_execute,code_rag"
                 DYNAMIC_ACCESS = "true"
             }
-        }
-        code_scale = @{
-            command = "code-scale-mcp"
-            args = @("--mode", "repository")
         }
         context7 = @{
             command = "context7-slim"
