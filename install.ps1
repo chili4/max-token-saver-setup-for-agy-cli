@@ -25,6 +25,7 @@ if (Get-Command "cargo" -ErrorAction SilentlyContinue) {
     $installDir = "C:\Windows\System32"
 }
 try {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     Invoke-WebRequest -Uri "https://github.com/rtk-ai/rtk/releases/download/v0.42.4/rtk-x86_64-pc-windows-msvc.zip" -OutFile $rtkZip -ErrorAction Stop
     Expand-Archive -Path $rtkZip -DestinationPath $rtkDest -Force
     Copy-Item "$rtkDest\rtk.exe" -Destination "$installDir\rtk.exe" -Force
