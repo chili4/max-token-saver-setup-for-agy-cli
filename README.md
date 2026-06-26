@@ -32,17 +32,22 @@ Para que este stack funcione correctamente, asegúrate de tener:
 Para que el script funcione, necesitas tener Node.js instalado (para Hippo Memory y Bifrost). Si aún no lo tienes, descárgalo e instálalo desde [nodejs.org](https://nodejs.org/).
 
 ### Paso 2: Crear el Archivo de Configuración (.env)
-Este proyecto automatizará todo el trabajo pesado. Solo necesitas decirle a Antigravity cuál es tu llave de acceso a Context7.
+Este proyecto automatizará todo el trabajo pesado. Solo necesitas decirle a Antigravity cuáles son tus llaves de acceso para Context7 y Bifrost (Maxim AI).
 1. Ve a [https://context7.com/](https://context7.com/) y regístrate para obtener tu API Key.
-2. En la raíz de este proyecto, haz una copia del archivo `.env.example` y llámalo `.env`.
-3. Pega tu API Key dentro del archivo `.env`.
+2. Ve a [https://www.getmaxim.ai/bifrost](https://www.getmaxim.ai/bifrost) para obtener tu API Key de Bifrost.
+3. En la raíz de este proyecto, haz una copia del archivo `.env.example` y llámalo `.env`.
+4. Pega tus API Keys dentro del archivo `.env`:
+```env
+CONTEXT7_API_KEY="tu_clave_de_context7"
+BIFROST_API_KEY="tu_clave_de_maxim"
+```
 
 ### Paso 3: Ejecutar la Instalación Automática
 Abre una terminal de PowerShell como Administrador en la carpeta de este proyecto y ejecuta:
 ```powershell
 .\install.ps1
 ```
-¡El script se encargará del resto! Descargará los binarios precompilados de RTK, instalará las dependencias de Hippo Memory (haciéndolo disponible como comando global `hippo`), instalará Bifrost localmente, configurará el Gateway y desplegará las reglas de la directiva Superpowers en la raíz global.
+¡El script se encargará del resto! Descargará los binarios precompilados de RTK, instalará las dependencias de Hippo Memory (haciéndolo disponible como comando global `hippo`), configurará la pasarela dinámica de Bifrost, enlazará el Gateway y desplegará las reglas de la directiva Superpowers en la raíz global.
 
 ## 🚀 Cómo Activarlo y Usarlo Globalmente en Antigravity CLI (`agy`)
 
