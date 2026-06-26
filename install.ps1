@@ -44,13 +44,7 @@ if (Test-Path "hippo-memory\package.json") {
         Write-Host "Instalando dependencias de Node para Hippo Memory..."
         Set-Location hippo-memory
         npm install
-        
-        Write-Host "Configurando Hippo Memory para ejecución automática en segundo plano (PM2)..."
-        if (-Not (Get-Command "pm2" -ErrorAction SilentlyContinue)) {
-            npm install -g pm2
-        }
-        pm2 start "npm start" --name "hippo-memory"
-        pm2 save
+        npm link
         Set-Location ..
     } else {
         Write-Host "[WARN] 'npm' no está instalado. Instala Node.js para poder usar Hippo Memory." -ForegroundColor Yellow

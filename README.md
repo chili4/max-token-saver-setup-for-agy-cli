@@ -42,7 +42,7 @@ Abre una terminal de PowerShell como Administrador en la carpeta de este proyect
 ```powershell
 .\install.ps1
 ```
-¡El script se encargará del resto! Descargará los binarios precompilados de RTK, instalará Bifrost localmente, configurará el Gateway, desplegará las reglas de la directiva Superpowers en la raíz global, **y configurará Hippo Memory como un servicio en segundo plano automático usando PM2**.
+¡El script se encargará del resto! Descargará los binarios precompilados de RTK, instalará las dependencias de Hippo Memory (haciéndolo disponible como comando global `hippo`), instalará Bifrost localmente, configurará el Gateway y desplegará las reglas de la directiva Superpowers en la raíz global.
 
 ## 🚀 Cómo Activarlo y Usarlo Globalmente en Antigravity CLI (`agy`)
 

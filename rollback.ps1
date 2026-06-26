@@ -19,13 +19,8 @@ if (Test-Path $rtkExe) {
     Write-Host "[OK] RTK ($rtkExe) eliminado." -ForegroundColor Green
 }
 if (Test-Path "hippo-memory") {
-    if (Get-Command "pm2" -ErrorAction SilentlyContinue) {
-        Write-Host "Deteniendo servicio de Hippo Memory..."
-        pm2 delete hippo-memory -s | Out-Null
-        pm2 save -s | Out-Null
-    }
     Remove-Item -Recurse -Force "hippo-memory"
-    Write-Host "[OK] Carpeta hippo-memory eliminada y servicio detenido." -ForegroundColor Green
+    Write-Host "[OK] Carpeta hippo-memory eliminada." -ForegroundColor Green
 }
 
 $globalConfigPath = "$env:USERPROFILE\.gemini\config"
