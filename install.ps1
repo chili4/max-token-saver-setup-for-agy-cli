@@ -44,6 +44,8 @@ if (Test-Path "hippo-memory\package.json") {
         Write-Host "Instalando dependencias de Node para Hippo Memory..."
         Set-Location hippo-memory
         npm install
+        Write-Host "Compilando Hippo Memory (TypeScript)..."
+        npm run build
         npm link
         Set-Location ..
     } else {
@@ -57,25 +59,11 @@ if (-Not (Test-Path $globalConfigPath)) {
     New-Item -ItemType Directory -Force -Path $globalConfigPath | Out-Null
 }
 
-Write-Host "Instalando Bifrost de manera local..."
-$bifrostPath = "$globalConfigPath\bifrost"
-if (-Not (Test-Path $bifrostPath)) {
-    git clone https://github.com/maximhq/bifrost.git $bifrostPath
-}
-if (Test-Path "$bifrostPath\package.json") {
-    if (Get-Command "npm" -ErrorAction SilentlyContinue) {
-        Write-Host "Instalando dependencias de Bifrost..."
-        Set-Location $bifrostPath
-        npm install
-        Set-Location $PSScriptRoot
-    }
-}
-
 $mcpConfig = @{
     mcpServers = @{
         bifrost = @{
-            command = "node"
-            args = @("$bifrostPath\bifrost-gateway.js")
+            command = "npx"
+            args = @("-y", "@maximhq/bifrost")
             env = @{
                 GATEWAY_MODE = "OneTool"
                 ALLOWED_META_TOOLS = "code_read,code_write,code_execute,code_rag"

@@ -25,12 +25,17 @@ if (Test-Path "hippo-memory") {
 
 $globalConfigPath = "$env:USERPROFILE\.gemini\config"
 Write-Host "Eliminando configuraciones globales de $globalConfigPath..."
-$filesToRemove = @("mcp-config.json", "AGENTS.md", ".env", "bifrost")
-foreach ($f in $filesToRemove) {
-    if (Test-Path "$globalConfigPath\$f") {
-        Remove-Item "$globalConfigPath\$f" -Recurse -Force
-        Write-Host "[OK] Recurso global $f eliminado." -ForegroundColor Green
-    }
+if (Test-Path "$globalConfigPath\mcp-config.json") {
+    Remove-Item "$globalConfigPath\mcp-config.json" -Force
+    Write-Host "[OK] Recurso global mcp-config.json eliminado." -ForegroundColor Green
+}
+if (Test-Path "$globalConfigPath\AGENTS.md") {
+    Remove-Item "$globalConfigPath\AGENTS.md" -Force
+    Write-Host "[OK] Recurso global AGENTS.md eliminado." -ForegroundColor Green
+}
+if (Test-Path "$globalConfigPath\.env") {
+    Remove-Item "$globalConfigPath\.env" -Force
+    Write-Host "[OK] Recurso global .env eliminado." -ForegroundColor Green
 }
 # Eliminar local mcp-config por si acaso quedó de una versión anterior
 if (Test-Path "mcp-config.json") {
