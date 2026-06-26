@@ -49,7 +49,7 @@ if (Test-Path "hippo-memory\package.json") {
         if (-Not (Get-Command "pm2" -ErrorAction SilentlyContinue)) {
             npm install -g pm2
         }
-        pm2 start npm --name "hippo-memory" -- start
+        pm2 start "npm start" --name "hippo-memory"
         pm2 save
         Set-Location ..
     } else {
