@@ -8,13 +8,10 @@ Tras ejecutar el script `install.ps1`, tu entorno tiene el siguiente estado:
 
 **Instalado y Descargado Automáticamente:**
 * **RTK (Rust Token Killer)**: Se descarga el binario precompilado oficial y se instala en el PATH de tu sistema (`C:\Users\tu_usuario\.cargo\bin` o `System32`). No requiere compilación.
-* **Hippo Memory**: Clonado en la carpeta `/hippo-memory`. Las dependencias de Node.js se instalan automáticamente.
-* **Bifrost (Maxim AI)**: Instalado localmente como Gateway en tu carpeta de configuración global de Antigravity (`~/.gemini/config/bifrost`).
-* **Gateway mcp-config**: Se crea el archivo `mcp-config.json` apuntando a Bifrost.
+* **Hippo Memory**: Descargado y compilado en la carpeta `/hippo-memory`. Su CLI (`hippo`) se enlaza globalmente.
+* **Bifrost (Maxim AI)**: Configurado como un Gateway dinámico en la nube. Se ejecuta al vuelo usando el comando nativo `npx`.
+* **Gateway mcp-config**: Se crea el archivo `mcp-config.json` apuntando a Bifrost y Context7.
 * **Directivas de Agente**: El archivo `.agents/AGENTS.md` está activo para forzar a Antigravity a usar el "Protocolo de Quiebre".
-
-**Requiere Acción Manual (Context7 SaaS):**
-* **context7-slim**: Es un servicio en la nube al que Antigravity enviará consultas de forma remota para no usar tu CPU. Debes registrarte en https://context7.com/ para obtener tu API Key.
 
 ---
 
@@ -22,9 +19,8 @@ Tras ejecutar el script `install.ps1`, tu entorno tiene el siguiente estado:
 
 Para que este stack funcione correctamente, asegúrate de tener:
 1. **Node.js** (v18 o superior) y **NPM** instalado.
-2. **Rust y Cargo** (para compilar y usar RTK).
-3. **Antigravity CLI (`agy`)** instalado y autenticado en tu terminal.
-4. **Claves de API** para Context7 y Maxim AI (Bifrost).
+2. **Antigravity CLI (`agy`)** instalado y autenticado en tu terminal.
+3. **Claves de API** para Context7 y Maxim AI (Bifrost).
 
 ---
 
