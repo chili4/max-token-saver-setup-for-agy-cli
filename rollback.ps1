@@ -23,15 +23,13 @@ if (Test-Path "hippo-memory") {
     Write-Host "[OK] Carpeta hippo-memory eliminada." -ForegroundColor Green
 }
 
-Write-Host "Para context7-slim y Bifrost, revoca el acceso desde sus respectivos portales web." -ForegroundColor Yellow
-
 $globalConfigPath = "$env:USERPROFILE\.gemini\config"
 Write-Host "Eliminando configuraciones globales de $globalConfigPath..."
-$filesToRemove = @("mcp-config.json", "AGENTS.md", ".env")
+$filesToRemove = @("mcp-config.json", "AGENTS.md", ".env", "bifrost")
 foreach ($f in $filesToRemove) {
     if (Test-Path "$globalConfigPath\$f") {
-        Remove-Item "$globalConfigPath\$f" -Force
-        Write-Host "[OK] Archivo global $f eliminado." -ForegroundColor Green
+        Remove-Item "$globalConfigPath\$f" -Recurse -Force
+        Write-Host "[OK] Recurso global $f eliminado." -ForegroundColor Green
     }
 }
 # Eliminar local mcp-config por si acaso quedó de una versión anterior

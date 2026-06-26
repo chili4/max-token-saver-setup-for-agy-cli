@@ -51,21 +51,31 @@ if (Test-Path "hippo-memory\package.json") {
     }
 }
 
-Write-Host "Aviso de Instalación Manual: context7-slim y Bifrost"
-Write-Host "1. context7-slim: Requiere configuración de cuenta o descarga desde https://context7.com/" -ForegroundColor Yellow
-Write-Host "2. Bifrost: Herramienta de ecosistema getmaxim.ai. Sigue los pasos de configuración de API en https://www.getmaxim.ai/bifrost" -ForegroundColor Yellow
-
 Write-Host "Configurando mcp-config.json Gateway y Reglas Globales..."
 $globalConfigPath = "$env:USERPROFILE\.gemini\config"
 if (-Not (Test-Path $globalConfigPath)) {
     New-Item -ItemType Directory -Force -Path $globalConfigPath | Out-Null
 }
 
+Write-Host "Instalando Bifrost de manera local..."
+$bifrostPath = "$globalConfigPath\bifrost"
+if (-Not (Test-Path $bifrostPath)) {
+    git clone https://github.com/maximhq/bifrost.git $bifrostPath
+}
+if (Test-Path "$bifrostPath\package.json") {
+    if (Get-Command "npm" -ErrorAction SilentlyContinue) {
+        Write-Host "Instalando dependencias de Bifrost..."
+        Set-Location $bifrostPath
+        npm install
+        Set-Location $PSScriptRoot
+    }
+}
+
 $mcpConfig = @{
     mcpServers = @{
         bifrost = @{
             command = "node"
-            args = @("bifrost-gateway.js")
+            args = @("$bifrostPath\bifrost-gateway.js")
             env = @{
                 GATEWAY_MODE = "OneTool"
                 ALLOWED_META_TOOLS = "code_read,code_write,code_execute,code_rag"
@@ -93,7 +103,7 @@ if (Test-Path ".env") {
     Copy-Item ".env" -Destination "$globalConfigPath\.env" -Force
     Write-Host "[OK] Archivo .env detectado e instalado GLOBALMENTE." -ForegroundColor Green
 } else {
-    Write-Host "[INFO] No se encontró un archivo .env en la raíz. Recuerda crear $globalConfigPath\.env con tus API Keys de Bifrost/Context7." -ForegroundColor Cyan
+    Write-Host "[INFO] No se encontró un archivo .env en la raíz. Recuerda crear $globalConfigPath\.env con tu API Key de Context7." -ForegroundColor Cyan
 }
 
 Write-Host "`n=========================================="

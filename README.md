@@ -9,13 +9,12 @@ Tras ejecutar el script `install.ps1`, tu entorno tiene el siguiente estado:
 **Instalado y Descargado Automáticamente:**
 * **RTK (Rust Token Killer)**: Se descarga el binario precompilado oficial y se instala en el PATH de tu sistema (`C:\Users\tu_usuario\.cargo\bin` o `System32`). No requiere compilación.
 * **Hippo Memory**: Clonado en la carpeta `/hippo-memory`. Las dependencias de Node.js se instalan automáticamente.
-* **Gateway mcp-config**: Se crea el archivo `mcp-config.json` en la raíz del proyecto para enrutar las peticiones del agente.
+* **Bifrost (Maxim AI)**: Instalado localmente como Gateway en tu carpeta de configuración global de Antigravity (`~/.gemini/config/bifrost`).
+* **Gateway mcp-config**: Se crea el archivo `mcp-config.json` apuntando a Bifrost.
 * **Directivas de Agente**: El archivo `.agents/AGENTS.md` está activo para forzar a Antigravity a usar el "Protocolo de Quiebre".
 
-**Requiere Acción Manual (Servicios SaaS en la Nube):**
-*Tanto Context7 como Bifrost no se instalan en tu computadora (no ocupan espacio ni CPU local). Son servicios en la nube a los que Antigravity enviará consultas de forma remota. Por eso, necesitas crear cuentas gratuitas/pagadas en sus portales.*
-* **context7-slim**: Debes registrarte en https://context7.com/ para obtener tus credenciales (API Key).
-* **Bifrost (Maxim AI)**: Debes configurar tu cuenta y API key en https://www.getmaxim.ai/bifrost.
+**Requiere Acción Manual (Context7 SaaS):**
+* **context7-slim**: Es un servicio en la nube al que Antigravity enviará consultas de forma remota para no usar tu CPU. Debes registrarte en https://context7.com/ para obtener tu API Key.
 
 ---
 
@@ -85,7 +84,6 @@ Una vez completados los requisitos y la instalación, este stack se activará pa
 ### Paso 1: Configurar las Variables de Entorno (Credenciales SaaS)
 Antes de correr el script de instalación, simplemente copia el archivo `.env.example`, renómbralo a `.env` y coloca ahí tus credenciales:
 ```env
-BIFROST_API_KEY="tu_clave_de_maxim"
 CONTEXT7_API_KEY="tu_clave_de_context7"
 ```
 Al ejecutar `.\install.ps1`, el script detectará tu `.env` y lo instalará en la raíz global de Antigravity junto con el resto de configuraciones (`AGENTS.md` y `mcp-config.json`).
