@@ -78,32 +78,33 @@ Para que este stack funcione correctamente, asegúrate de tener:
   ¡Y eso es todo! Al hacer esto último, Antigravity detectará nuestras reglas de  .agents/AGENTS.md  y nuestro puente
   mcp-config.json .
 
-## 🚀 Cómo Activarlo y Usarlo en Antigravity CLI (`agy`)
+## 🚀 Cómo Activarlo y Usarlo Globalmente en Antigravity CLI (`agy`)
 
-Una vez completados los requisitos y la instalación, sigue estos pasos para lanzar una sesión optimizada:
+Una vez completados los requisitos y la instalación, este stack se activará para **TODOS** los proyectos de tu computadora.
 
 ### Paso 1: Configurar las Variables de Entorno (Credenciales SaaS)
-Antes de iniciar `agy`, asegúrate de tener las credenciales para Bifrost y Context7 configuradas en tu terminal.
-```powershell
-$env:BIFROST_API_KEY="tu_clave_de_maxim"
-$env:CONTEXT7_API_KEY="tu_clave_de_context7"
+Antes de correr el script de instalación, simplemente copia el archivo `.env.example`, renómbralo a `.env` y coloca ahí tus credenciales:
+```env
+BIFROST_API_KEY="tu_clave_de_maxim"
+CONTEXT7_API_KEY="tu_clave_de_context7"
 ```
+Al ejecutar `.\install.ps1`, el script detectará tu `.env` y lo instalará en la raíz global de Antigravity junto con el resto de configuraciones (`AGENTS.md` y `mcp-config.json`).
 
 ### Paso 2: Ejecutar los Demonios en Segundo Plano
-Para que el Gateway y la memoria funcionen, inicia sus servidores en terminales separadas (o en segundo plano):
+Para que la memoria a largo plazo y la intercepción de salida funcionen:
 * Para Hippo Memory: Entra a `hippo-memory/` y ejecuta su comando de inicio (ej. `npm start`).
-* Para RTK: Asegúrate de que el binario de RTK esté en tu PATH para que intercepte la salida por defecto.
+* Para RTK: Ya está en tu PATH global, asegúrate de que esté configurado para interceptar la salida.
 
 ### Paso 3: Iniciar la sesión de Antigravity CLI
-Abre tu terminal en la raíz de este proyecto y lanza el agente:
+Abre tu terminal en **cualquier** proyecto o carpeta de tu PC y lanza el agente:
 ```powershell
 agy
 ```
 
-**¿Qué sucederá automáticamente?**
-1. **Detección de Reglas:** `agy` detectará inmediatamente el archivo `.agents/AGENTS.md`. Verás que el agente se comporta diferente: no generará código hasta que no cree un plan estructurado en `docs/plans/current_task.md`.
-2. **Detección MCP:** `agy` leerá `mcp-config.json` y se conectará automáticamente a Bifrost (que a su vez enruta a `context7`).
-3. **El Protocolo de Quiebre:** Cuando pidas una tarea compleja, el agente escribirá el plan y **se detendrá**. Te pedirá que ejecutes `/clear`. Al hacerlo, limpiarás el historial largo de tokens, le pegarás el prompt de reinicio que te dio, y el agente continuará su trabajo consumiendo una fracción del costo habitual.
+**¿Qué sucederá automáticamente en toda tu máquina?**
+1. **Detección de Reglas Globales:** `agy` detectará tu configuración global. El agente se comportará diferente en cualquier proyecto: no generará código hasta que no cree un plan estructurado.
+2. **Detección MCP Global:** `agy` leerá tu `mcp-config.json` global y conectará a Bifrost/Context7 sin importar dónde estés programando.
+3. **El Protocolo de Quiebre:** Cuando pidas una tarea compleja, se detendrá y te entregará el texto para que uses `/clear` y ahorres tokens de forma masiva en todos tus proyectos.
 
 ---
 

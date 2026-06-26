@@ -55,7 +55,12 @@ Write-Host "Aviso de Instalación Manual: context7-slim y Bifrost"
 Write-Host "1. context7-slim: Requiere configuración de cuenta o descarga desde https://context7.com/" -ForegroundColor Yellow
 Write-Host "2. Bifrost: Herramienta de ecosistema getmaxim.ai. Sigue los pasos de configuración de API en https://www.getmaxim.ai/bifrost" -ForegroundColor Yellow
 
-Write-Host "Configurando mcp-config.json Gateway..."
+Write-Host "Configurando mcp-config.json Gateway y Reglas Globales..."
+$globalConfigPath = "$env:USERPROFILE\.gemini\config"
+if (-Not (Test-Path $globalConfigPath)) {
+    New-Item -ItemType Directory -Force -Path $globalConfigPath | Out-Null
+}
+
 $mcpConfig = @{
     mcpServers = @{
         bifrost = @{
@@ -73,8 +78,23 @@ $mcpConfig = @{
         }
     }
 }
-$mcpConfig | ConvertTo-Json -Depth 5 | Out-File -FilePath "mcp-config.json" -Encoding UTF8
-Write-Host "[OK] Gateway configurado en mcp-config.json." -ForegroundColor Green
+# Instalar mcp-config.json globalmente
+$mcpConfig | ConvertTo-Json -Depth 5 | Out-File -FilePath "$globalConfigPath\mcp-config.json" -Encoding UTF8
+Write-Host "[OK] Gateway configurado GLOBALMENTE en $globalConfigPath\mcp-config.json" -ForegroundColor Green
+
+# Instalar AGENTS.md globalmente
+if (Test-Path ".agents\AGENTS.md") {
+    Copy-Item ".agents\AGENTS.md" -Destination "$globalConfigPath\AGENTS.md" -Force
+    Write-Host "[OK] Directiva Superpowers instalada GLOBALMENTE en $globalConfigPath\AGENTS.md" -ForegroundColor Green
+}
+
+# Instalar .env globalmente
+if (Test-Path ".env") {
+    Copy-Item ".env" -Destination "$globalConfigPath\.env" -Force
+    Write-Host "[OK] Archivo .env detectado e instalado GLOBALMENTE." -ForegroundColor Green
+} else {
+    Write-Host "[INFO] No se encontró un archivo .env en la raíz. Recuerda crear $globalConfigPath\.env con tus API Keys de Bifrost/Context7." -ForegroundColor Cyan
+}
 
 Write-Host "`n=========================================="
 Write-Host " Instalación completada con éxito."
