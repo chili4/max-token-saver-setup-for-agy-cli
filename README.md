@@ -28,54 +28,21 @@ Para que este stack funcione correctamente, asegúrate de tener:
 
 ---
 
- ### Paso 1: Instalar los Motores Base (Node.js y Rust)
+### Paso 1: Instalar los Motores Base (Node.js)
+Para que el script funcione, necesitas tener Node.js instalado (para Hippo Memory y Bifrost). Si aún no lo tienes, descárgalo e instálalo desde [nodejs.org](https://nodejs.org/).
 
-  Como vimos, el script necesita poder compilar código de Node y de Rust.
+### Paso 2: Crear el Archivo de Configuración (.env)
+Este proyecto automatizará todo el trabajo pesado. Solo necesitas decirle a Antigravity cuál es tu llave de acceso a Context7.
+1. Ve a [https://context7.com/](https://context7.com/) y regístrate para obtener tu API Key.
+2. En la raíz de este proyecto, haz una copia del archivo `.env.example` y llámalo `.env`.
+3. Pega tu API Key dentro del archivo `.env`.
 
-  1. Node.js: Si aún no lo tienes, descárgalo e instálalo desde nodejs.org https://nodejs.org/. (Puedes dejar todas
-  las opciones por defecto en el instalador).
-  2. Rust (Cargo): Descarga el instalador oficial de Rust para Windows desde rustup.rs https://rustup.rs/. Descarga
-  rustup-init.exe  y ejecútalo. Cuando se abra la ventana negra (terminal), presiona  1  y luego  Enter  para la
-  instalación estándar.
-
-  (Nota: Una vez que termines de instalar ambos, es fundamental que cierres tu terminal actual y la vuelvas a abrir
-  para que reconozca los nuevos comandos  npm  y  cargo ).
-
-  ### Paso 2: Ejecutar nuestro Script de Instalación
-
-  Con Node y Rust instalados, abre una nueva terminal (PowerShell) como Administrador, navega a la carpeta de este
-  proyecto ( C:\Users\One2025\Desktop\tokensave antrigravity cli ) y ejecuta el script:
-
-    .\install.ps1
-
-  Este proceso tardará unos minutos, ya que ahora sí descargará el código de RTK y Hippo Memory, y los compilará
-  usando  cargo  y  npm .
-
-  ### Paso 3: Obtener tus Accesos SaaS (Context7 y Bifrost)
-
-  Mientras se compila lo del Paso 2, puedes ir gestionando tus credenciales de las herramientas en la nube:
-
-  1. Ve a https://context7.com/ y regístrate para obtener tu API Key.
-  2. Ve a https://www.getmaxim.ai/bifrost para obtener la API Key del ecosistema Maxim.
-
-  ### Paso 4: Cargar tus credenciales en el entorno
-
-  Una vez que tengas tus dos contraseñas (API Keys), pégalas en tu terminal de PowerShell ejecutando estos comandos
-  (reemplazando lo que está entre comillas con tus contraseñas reales):
-
-    $env:BIFROST_API_KEY="pega_aqui_tu_clave_de_maxim"
-    $env:CONTEXT7_API_KEY="pega_aqui_tu_clave_de_context7"
-
-  ### Paso 5: ¡Inicializar!
-
-  Con todo compilado y tus claves cargadas:
-
-  1. Entra a la nueva carpeta  hippo-memory  y arráncalo (probablemente con  npm start  o el comando que indique su
-  documentación).
-  2. En la terminal de la raíz de nuestro proyecto, simplemente escribe  agy  y presiona Enter.
-
-  ¡Y eso es todo! Al hacer esto último, Antigravity detectará nuestras reglas de  .agents/AGENTS.md  y nuestro puente
-  mcp-config.json .
+### Paso 3: Ejecutar la Instalación Automática
+Abre una terminal de PowerShell como Administrador en la carpeta de este proyecto y ejecuta:
+```powershell
+.\install.ps1
+```
+¡El script se encargará del resto! Descargará los binarios precompilados de RTK, instalará Bifrost localmente, configurará el Gateway y desplegará las reglas de la directiva Superpowers en la raíz global de tu sistema Antigravity.
 
 ## 🚀 Cómo Activarlo y Usarlo Globalmente en Antigravity CLI (`agy`)
 
