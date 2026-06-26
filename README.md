@@ -42,25 +42,13 @@ Abre una terminal de PowerShell como Administrador en la carpeta de este proyect
 ```powershell
 .\install.ps1
 ```
-¡El script se encargará del resto! Descargará los binarios precompilados de RTK, instalará Bifrost localmente, configurará el Gateway y desplegará las reglas de la directiva Superpowers en la raíz global de tu sistema Antigravity.
+¡El script se encargará del resto! Descargará los binarios precompilados de RTK, instalará Bifrost localmente, configurará el Gateway, desplegará las reglas de la directiva Superpowers en la raíz global, **y configurará Hippo Memory como un servicio en segundo plano automático usando PM2**.
 
 ## 🚀 Cómo Activarlo y Usarlo Globalmente en Antigravity CLI (`agy`)
 
-Una vez completados los requisitos y la instalación, este stack se activará para **TODOS** los proyectos de tu computadora.
+Una vez completada la instalación, este stack ya está activo para **TODOS** los proyectos de tu computadora de forma invisible.
 
-### Paso 1: Configurar las Variables de Entorno (Credenciales SaaS)
-Antes de correr el script de instalación, simplemente copia el archivo `.env.example`, renómbralo a `.env` y coloca ahí tus credenciales:
-```env
-CONTEXT7_API_KEY="tu_clave_de_context7"
-```
-Al ejecutar `.\install.ps1`, el script detectará tu `.env` y lo instalará en la raíz global de Antigravity junto con el resto de configuraciones (`AGENTS.md` y `mcp-config.json`).
-
-### Paso 2: Ejecutar los Demonios en Segundo Plano
-Para que la memoria a largo plazo y la intercepción de salida funcionen:
-* Para Hippo Memory: Entra a `hippo-memory/` y ejecuta su comando de inicio (ej. `npm start`).
-* Para RTK: Ya está en tu PATH global, asegúrate de que esté configurado para interceptar la salida.
-
-### Paso 3: Iniciar la sesión de Antigravity CLI
+### Iniciar la sesión de Antigravity CLI
 Abre tu terminal en **cualquier** proyecto o carpeta de tu PC y lanza el agente:
 ```powershell
 agy

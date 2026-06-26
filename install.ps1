@@ -39,16 +39,21 @@ Write-Host "Instalando Hippo Memory..."
 if (-Not (Test-Path "hippo-memory")) {
     git clone https://github.com/kitfunso/hippo-memory.git hippo-memory
 }
-# Intentando compilación si es Node
 if (Test-Path "hippo-memory\package.json") {
     if (Get-Command "npm" -ErrorAction SilentlyContinue) {
-        Write-Host "Instalando dependencias de Node..."
+        Write-Host "Instalando dependencias de Node para Hippo Memory..."
         Set-Location hippo-memory
         npm install
-        npm link
+        
+        Write-Host "Configurando Hippo Memory para ejecución automática en segundo plano (PM2)..."
+        if (-Not (Get-Command "pm2" -ErrorAction SilentlyContinue)) {
+            npm install -g pm2
+        }
+        pm2 start npm --name "hippo-memory" -- start
+        pm2 save
         Set-Location ..
     } else {
-        Write-Host "[WARN] 'npm' no está instalado. Omita la instalación de Hippo Memory." -ForegroundColor Yellow
+        Write-Host "[WARN] 'npm' no está instalado. Instala Node.js para poder usar Hippo Memory." -ForegroundColor Yellow
     }
 }
 
