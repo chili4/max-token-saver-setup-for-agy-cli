@@ -16,20 +16,22 @@ Write-Host "`n=========================================="
 Write-Host " Fase 1: Instalación de Herramientas de Contexto"
 Write-Host "=========================================="
 
-Write-Host "Instalando RTK (Rust Token Killer) desde repositorio oficial..."
-if (-Not (Test-Path "rtk")) {
-    git clone https://github.com/rtk-ai/rtk.git rtk
+Write-Host "Instalando RTK (Rust Token Killer) desde binarios precompilados..."
+$rtkZip = "$env:TEMP\rtk.zip"
+$rtkDest = "$env:TEMP\rtk-bin"
+if (Get-Command "cargo" -ErrorAction SilentlyContinue) {
+    $installDir = "$env:USERPROFILE\.cargo\bin"
+} else {
+    $installDir = "C:\Windows\System32"
 }
-# Intentando compilación si es Rust
-if (Test-Path "rtk\Cargo.toml") {
-    if (Get-Command "cargo" -ErrorAction SilentlyContinue) {
-        Write-Host "Compilando paquete de Rust..."
-        Set-Location rtk
-        cargo install --path .
-        Set-Location ..
-    } else {
-        Write-Host "[WARN] 'cargo' no está instalado. Omita la compilación de RTK. Instala Rust/Cargo y compílalo manualmente en la carpeta /rtk." -ForegroundColor Yellow
-    }
+try {
+    Invoke-WebRequest -Uri "https://github.com/rtk-ai/rtk/releases/download/v0.42.4/rtk-x86_64-pc-windows-msvc.zip" -OutFile $rtkZip -ErrorAction Stop
+    Expand-Archive -Path $rtkZip -DestinationPath $rtkDest -Force
+    Copy-Item "$rtkDest\rtk.exe" -Destination "$installDir\rtk.exe" -Force
+    Remove-Item -Recurse -Force $rtkDest, $rtkZip
+    Write-Host "[OK] RTK instalado correctamente en $installDir" -ForegroundColor Green
+} catch {
+    Write-Host "[WARN] No se pudo instalar RTK automáticamente. Descárgalo desde GitHub Releases." -ForegroundColor Yellow
 }
 
 Write-Host "Instalando Hippo Memory..."

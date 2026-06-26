@@ -6,14 +6,15 @@ Este repositorio contiene las configuraciones, scripts y directivas necesarias p
 
 Tras ejecutar el script `install.ps1`, tu entorno tiene el siguiente estado:
 
-**Instalado y Clonado Automáticamente:**
-* **RTK (Rust Token Killer)**: Clonado en la carpeta `/rtk`. Requiere compilación local con `cargo`.
-* **Hippo Memory**: Clonado en la carpeta `/hippo-memory`. Las dependencias de Node.js se han instalado.
-* **Gateway mcp-config**: Se ha creado el archivo `mcp-config.json` en la raíz del proyecto para enrutar las peticiones.
+**Instalado y Descargado Automáticamente:**
+* **RTK (Rust Token Killer)**: Se descarga el binario precompilado oficial y se instala en el PATH de tu sistema (`C:\Users\tu_usuario\.cargo\bin` o `System32`). No requiere compilación.
+* **Hippo Memory**: Clonado en la carpeta `/hippo-memory`. Las dependencias de Node.js se instalan automáticamente.
+* **Gateway mcp-config**: Se crea el archivo `mcp-config.json` en la raíz del proyecto para enrutar las peticiones del agente.
 * **Directivas de Agente**: El archivo `.agents/AGENTS.md` está activo para forzar a Antigravity a usar el "Protocolo de Quiebre".
 
-**Requiere Acción Manual (Servicios SaaS):**
-* **context7-slim**: Debes registrarte en https://context7.com/ para obtener tus credenciales.
+**Requiere Acción Manual (Servicios SaaS en la Nube):**
+*Tanto Context7 como Bifrost no se instalan en tu computadora (no ocupan espacio ni CPU local). Son servicios en la nube a los que Antigravity enviará consultas de forma remota. Por eso, necesitas crear cuentas gratuitas/pagadas en sus portales.*
+* **context7-slim**: Debes registrarte en https://context7.com/ para obtener tus credenciales (API Key).
 * **Bifrost (Maxim AI)**: Debes configurar tu cuenta y API key en https://www.getmaxim.ai/bifrost.
 
 ---

@@ -8,10 +8,15 @@ Write-Host "`n=========================================="
 Write-Host " Fase 1: Rollback de Instalación"
 Write-Host "=========================================="
 
-Write-Host "Eliminando carpetas clonadas (RTK, Hippo Memory)..."
-if (Test-Path "rtk") {
-    Remove-Item -Recurse -Force "rtk"
-    Write-Host "[OK] Carpeta rtk eliminada." -ForegroundColor Green
+Write-Host "Eliminando archivos (RTK, Hippo Memory)..."
+if (Get-Command "cargo" -ErrorAction SilentlyContinue) {
+    $rtkExe = "$env:USERPROFILE\.cargo\bin\rtk.exe"
+} else {
+    $rtkExe = "C:\Windows\System32\rtk.exe"
+}
+if (Test-Path $rtkExe) {
+    Remove-Item $rtkExe -Force
+    Write-Host "[OK] RTK ($rtkExe) eliminado." -ForegroundColor Green
 }
 if (Test-Path "hippo-memory") {
     Remove-Item -Recurse -Force "hippo-memory"
